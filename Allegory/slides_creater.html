@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html id="htmlTag">
+
+<head>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="jquery.js"></script>
+    <script>
+        var user_id = "";
+        var token = "";
+        var username = ""
+        function myCreds() {
+            //var cookie = ("; " + document.cookie).split("; data=").pop().split(";").shift();
+            var cookie = localStorage.getItem("data");
+            console.log(cookie);
+            var results = JSON.parse(cookie);
+            user_id = results.user_id;
+            token = results.token;
+            username = results.name;
+            console.log(user_id + token + username);
+            const foo = document.getElementById('foo');
+            document.getElementById("authorization").value = token;
+            const formData = new FormData(foo);
+            console.log(formData);
+        }
+    </script>
+
+
+
+    <style>
+        /* .navbar {
+              width: 100%;
+              z-index: 9999;
+              background-color: var(--header-background-color, #121c02) !important;
+              font-family: 'Cairo-Local';
+              height: 60px;
+              margin-top: -340px;
+             }
+
+            .navbar-nav {
+              padding-right: 24px;
+             }
+
+           .navbar-logo {
+              padding-left: 24px;
+              height: 18px;
+            }
+
+           .nav-link {
+            font-size: 1em;
+            color: var(--header-text-color, #fcfcf2) !important;
+            margin: 0px 12px;
+           -webkit-transition: 0.2s;
+           -o-transition: 0.2s;
+           transition: 0.2s;
+          }
+
+          .nav-link:hover {
+            color: var(--header-active-color, #e34a32) !important;
+           -webkit-transition: 0.2s;
+           -o-transition: 0.2s;
+           transition: 0.2s;
+          } */
+
+
+        .background {
+            background: url();
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+            border: #FFF solid 2px;
+        }
+
+        body {
+            color: white;
+            text-align: center;
+            background-color: transparent;
+            display: table-cell;
+            vertical-align: middle;
+            height: 100vh;
+            width: 100vw;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+
+        }
+
+        html,
+        body {
+            height: 100%;
+         
+        }
+
+        body {
+            background-image: url("imgs/design.jpg");
+            background-color: #cccccc;
+
+        }
+
+
+        html {
+            display: table;
+            margin: auto;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-color: black;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        .slideContainer {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+
+        }
+
+        .slide {
+            align-self: center;
+        }
+
+        .dataContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .data {
+            align-self: center;
+        }
+
+        .inputHeading {
+            background-color: transparent;
+            width: 80%;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        textarea {
+            background-color: transparent;
+            width: 80%;
+            height: 100%;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .fab {
+            position: fixed;
+            width: 120px;
+            height: 40px;
+            bottom: 160px;
+            right: 40px;
+            background-color: rgb(62, 121, 13);
+            color: #FFF;
+            border-radius: 40px;
+            border-color: transparent;
+            text-align: center;
+            box-shadow: 2px 2px 3px #999;
+            transition: all .2s ease-in-out;
+        }
+
+        .fab:hover {
+            transform: scale(1.02);
+            /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+
+        .fab2 {
+            position: fixed;
+            width: 120px;
+            height: 40px;
+            bottom: 100px;
+            right: 40px;
+            background-color: rgb(53, 76, 179);
+            color: #FFF;
+            border-radius: 40px;
+            border-color: transparent;
+            text-align: center;
+            box-shadow: 2px 2px 3px #999;
+            transition: all .2s ease-in-out;
+        }
+
+        .fab2:hover {
+            transform: scale(1.02);
+            /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+
+        .fab3 {
+            position: fixed;
+            width: 120px;
+            height: 40px;
+            bottom: 40px;
+            right: 40px;
+            background-color: rgb(187, 40, 40);
+            color: #FFF;
+            border-radius: 40px;
+            border-color: transparent;
+            text-align: center;
+            box-shadow: 2px 2px 3px #999;
+            transition: all .2s ease-in-out;
+        }
+
+        .fab3:hover {
+            transform: scale(1.02);
+            /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+
+        .fab3x {
+            position: fixed;
+            width: 120px;
+            height: 40px;
+            bottom: 40px;
+            right: 40px;
+            background-color: transparent;
+        }
+    </style>
+
+
+</head>
+<script>
+    var id = 0;
+    var animations = ['fade', 'fade-up', 'fade-down', 'fade-left', 'fade-right', 'fade-up-right', 'fade-up-left', 'fade-down-right', 'fade-down-left', 'flip-up', 'flip-down', 'flip-left', 'flip-right', 'slide-left', 'slide-right', 'zoom-in', 'zoom-in-up', 'zoom-in-down', 'zoom-in-left', 'zoom-in-right', 'zoom-out', 'zoom-out-up', 'zoom-out-down', 'zoom-out-left', 'zoom-out-right'];
+    function renderer() {
+        var randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+        var p = document.getElementById("player");
+        var newElement = document.createElement("DIV");
+        id++;
+        newElement.setAttribute('id', "slideContainer" + id);
+        newElement.setAttribute('data-aos', randomAnimation);
+        newElement.setAttribute('class', "slideContainer");
+        var html = `
+                <div class="row background slide" style="height: 600px; width:100%" id="slide`+ id + `">
+                    <div class="container">
+                        <div style="margin-top: 100px;">
+                            <h3>
+                                <div class="row dataContainer">
+                                    <input type="text" class="inputHeading" name="heading" placeholder="add heading" required>
+                                </div>
+                            </h3>
+                        </div>
+                        <div style="margin-top: 50px;">
+                            <div class="row dataContainer" style="height: 150px;">
+                                <textarea name="center" placeholder="add body" required></textarea>
+                            </div>
+                        </div>
+                        <div style="margin-top: 50px;">
+                            <div class="row dataContainer" style="height: 50px;">
+                                <textarea name="footer" placeholder="add footer" required></textarea>
+                            </div>
+                        </div>
+                        <div style="margin-top: 50px;">
+                            <div class="row" style="height: 50px;">
+                                <div class="col">
+                                    <input type="file" name="image" onchange="readURL(this,'slide` + id + `')">
+                                </div>
+                                <div class="col">
+                                    <input type="color" name="fontColor">
+                                </div>
+                                <div class="col">
+                                    <select name="animation">
+                                        <option selected disabled>Select Animation</option><option disabled>Fade animations:</option><option value="fade">fade</option><option value="fade-up">fade-up</option>
+                                        <option value="fade-down">fade-down</option><option value="fade-left">fade-left</option><option value="fade-right">fade-right</option><option value="fade-up-right">fade-up-right</option><option value="fade-up-left">fade-up-left</option><option value="fade-down-right">fade-down-right</option><option value="fade-down-left">fade-down-left</option>
+                                        <option disabled>Flip animations:</option><option value="flip-up">flip-up</option><option value="flip-down">flip-down</option><option value="flip-left">flip-left</option><option value="flip-right">flip-right</option><option disabled>Slide animations:</option><option value="slide-up">slide-up</option>
+                                        <option value="slide-left">slide-left</option><option value="slide-right">slide-right</option><option disabled>Zoom animations:</option><option value="zoom-in">zoom-in</option><option value="zoom-in-up">zoom-in-up</option><option value="zoom-in-down">zoom-in-down</option><option value="zoom-in-left">zoom-in-left</option>
+                                        <option value="zoom-in-right">zoom-in-right</option><option value="zoom-out">zoom-out</option><option value="zoom-out-up">zoom-out-up</option><option value="zoom-out-down">zoom-out-down</option><option value="zoom-out-left">zoom-out-left</option><option value="zoom-out-right">zoom-out-right</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        newElement.innerHTML = html;
+        p.appendChild(newElement);
+
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#slideContainer" + id).offset().top
+        }, 1000);
+        //document.getElementById("player").innerHTML = html;
+        //document.getElementById("htmlTag").style.background = "url(" + background + ") no-repeat center center fixed";
+    }
+    function readURL(input, output) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById(output).style.backgroundImage = "url('" + e.target.result + "') ";
+                //$('#blah').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    function submitData() {
+        var data = new FormData();
+        jQuery.each(jQuery('#foo')[0].files, function (i, file) {
+            data.append('file-' + i, file);
+        });
+        console.log(data);
+        jQuery.ajax({
+            url: 'http://localhost:3000/api/v1/story/',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            authorization:'Bearer '+token,
+            method: 'POST',
+            type: 'POST', // For jQuery < 1.9
+            success: function (data) {
+                alert(data);
+            }
+        });
+
+    }
+
+
+</script>
+</head>
+
+<body id="body" onload="myCreds()">
+    <!-- Start nav -->
+    <!-- <nav class="navbar navbar-expand navbar-light bg-light">
+            <a class="navbar-brand" href="index.html">
+                <img id="logo" src="imgs/logo.png" width="50px" class="d-inline-block align-top" alt="">
+            </a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-truncate" href="login.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="register.html">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="story_player_template.html">View story</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="slides_creater.html"> Create story</a>
+              </li>
+
+            </ul>
+        </nav> -->
+    <!-- end nav bar -->
+
+    <form id="foo" action="http://localhost:3000/api/v1/story/" method="POST" enctype="multipart/form-data">
+        <div class="container">
+
+            <h2>
+                <input type="text" name="storyname" class="inputHeading" placeholder="Title Of The Story" required>
+            </h2>
+
+        </div>
+        <div class="container" id="player">
+
+            <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+            <script>
+                AOS.init({ easing: 'ease-out-back', duration: 1000, delay: 300 });
+            </script>
+        </div>
+        <input type="hidden" name="authorization" id="authorization" value="" />
+        <label for="filess" class="btn btn-outline-primary">Select Background Image</label>
+        <input id="filess" type="file" name="background" class="fab3x" onchange="readURL(this,'body')">
+        <button onclick="renderer()" class="fab" type="button">+ Slide</button>
+        <!-- <button id="subbut" onclick="submitData()"  type="button">Submit</button> -->
+        <input type="submit" class="fab2">
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,231 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="jquery.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+    .navbar {
+      width: 100%;
+      z-index: 9999;
+      background-color: var(--header-background-color, #000000) !important;
+      font-family: 'Cairo-Local';
+      height: 55px;
+    }
+
+    .navbar-nav {
+      padding-right: 24px;
+    }
+
+    .navbar-logo {
+      padding-left: 24px;
+      height: 18px;
+    }
+
+    .nav-link {
+      font-size: 1em;
+      color: var(--header-text-color, #fcfcf2) !important;
+      margin: 0px 12px;
+      -webkit-transition: 0.2s;
+      -o-transition: 0.2s;
+      transition: 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--header-active-color, #e34a32) !important;
+      -webkit-transition: 0.2s;
+      -o-transition: 0.2s;
+      transition: 0.2s;
+    }
+
+    body {
+      /* background-image: url("imgs/mountain.jpg"); */
+      background-color: #ffffff;
+    }
+
+    .card {
+      /* background-image: url("imgs/login.jpg");  */
+      background: none;
+    }
+
+
+    input.ng-invalid.ng-touched {
+      border: 1px solid rgb(223, 6, 6);
+    }
+
+
+    h3 {
+      margin: 32px 0 16px 0;
+      color: #EEE;
+    }
+
+    form {
+      margin-top: 40px;
+      color: rgb(0, 0, 0);
+      padding: 24px;
+      -webkit-border-radius: 8px;
+      border-radius: 8px;
+      background: none;
+      /* background-color: #1A1F26; */
+      -webkit-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.75);
+      box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.75);
+    }
+
+    input,
+    select,
+    button {
+      -webkit-appearance: none;
+      outline: none;
+      border: none;
+    }
+
+    input,
+    select {
+      padding-left: 16px !important;
+    }
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      background-repeat: no-repeat;
+      background-size: 16px 16px;
+      background-position: -webkit-calc(100% - 8px) 50%;
+      background-position: calc(100% - 8px) 50%;
+      -webkit-transition: 0.25s;
+      -o-transition: 0.25s;
+      transition: 0.25s;
+    }
+
+    label {
+      color: rgb(0, 0, 0);
+    }
+
+    input,
+    select,
+    textarea {
+      background-color: #272D35;
+      border: 0px solid white;
+      color: #000000;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border: 0px solid white;
+      color: rgb(0, 0, 0);
+    }
+
+    .login-btn {
+      color: #FFF;
+      position: relative;
+      bottom: 0px;
+      background: #541AD3 !important;
+      -webkit-transition: 0.25s;
+      -o-transition: 0.25s;
+      transition: 0.25s;
+      width: 100%;
+      margin-top: 24px;
+    }
+
+    .login-btn:hover {
+      position: relative;
+      bottom: 2px;
+      background: #541AD3 !important;
+      -webkit-box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.4);
+      box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.4);
+      -webkit-transition: 0.25s;
+      -o-transition: 0.25s;
+      transition: 0.25s;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Start nav -->
+  <nav class="navbar navbar-expand navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">
+      <img id="logo" src="imgs/logo.png" width="50px" class="d-inline-block align-top" alt="">
+    </a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link text-truncate" href="login.html">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="register.html">Register</a>
+      </li>
+
+    </ul>
+  </nav>
+  <!-- end nav bar -->
+
+  <div class="container">
+    <form method="POST" id="loginForm">
+      <h5 class="card-title">Login</h5>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+
+      // process the form
+      $('form').submit(function (event) {
+
+        // get the form data
+        // there are many ways to get this data using jQuery (you can use the class or id also)
+        var formData = {
+          'email': $('input[name=email]').val(),
+          'password': $('input[name=password]').val(),
+        };
+
+        // process the form
+        $.ajax({
+          type: 'POST', // define the type of HTTP verb we want to use (POST for our form)
+          url: 'http://localhost:3000/api/v1/users/login', // the url where we want to POST
+          data: formData, // our data object
+          dataType: 'json', // what type of data do we expect back from the server
+          encode: true
+        })
+          // using the done promise callback
+          .done(function (data) {
+
+            // log data to the console so we can see
+            console.log(JSON.stringify(data));
+
+            var results = JSON.parse(JSON.stringify(data));
+            console.log(results);
+            if (results) {
+              localStorage.setItem("data", JSON.stringify(data));
+              document.location.href = "profile.html";
+            }
+            else {
+              alert("wrong credentials");
+            }
+
+            //console.log(Cookies.get('name'));
+            // here we will handle errors and validation messages
+          });
+
+        // stop the form from submitting the normal way and refreshing the page
+        event.preventDefault();
+      });
+
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html id="htmlTag" style="background-color: transparent;
+height: 100vh;
+width: 100vw;
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover;
+background-attachment: fixed;">
+
+<head>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery.js"></script>
+
+
+
+    <style>
+        .background {
+            background: url(design.jpg);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        body {
+            text-align: center;
+            background-color: transparent;
+            display: table-cell;
+            vertical-align: middle;
+            height: 100vh;
+            width: 100vw;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-attachment: fixed;
+
+        }
+
+        html,
+        body {
+            height: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        html {
+            display: table;
+            margin: auto;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        .slideContainer {
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+
+            top: 0;
+            bottom: 0;
+        }
+
+        .slide {
+            align-self: center;
+        }
+
+        .dataContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .data {
+            align-self: center;
+        }
+    </style>
+
+
+</head>
+<script>
+    function renderer() {
+        var i = 0;
+        //////////// AJAX REQUEST TO GET DATA ////////////////////
+        var xhttp = new XMLHttpRequest();
+        var html = '';
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var result = this.responseText;
+                var results = JSON.parse(result);
+
+                var background;
+                results.result.forEach((slide) => {
+                    i++;
+                    // console.log(slide);
+                    var id = slide.id;
+                    var name = slide.name;
+                    var image = slide.image;
+                    var animation = slide.animation;
+                    var heading = slide.heading;
+                    var center = slide.center;
+                    var footer = slide.footer;
+                    var story_id = slide.story_id;
+                    var fontColor = slide.fontColor;
+                    background = slide.background;
+
+                    /*
+                                        html += `<div style="color:`+fontColor+`" class="slideContainer" data-aos="`+animation+`" data-aos-anchor-placement="center-bottom" id="slide`+i+`" onwheel='scrollSlide(`+(i+1)+`)'>`;
+                    
+                                        html += '<div class="row background slide" style="height: 70%; background-image: url(' + image + ');" >';
+                    
+                                        html += '<div class="container">';
+                    
+                                        html += '<div style="margin-top: 100px;">';
+                                        html += '<h3> ' + heading + '</h3>';
+                                        html += '</div >';//end heading
+                    
+                                        html += '<div style="margin-top: 50px;">'
+                                        html += '<div class="row dataContainer" style="height: 250px;">';
+                                        html += '<p class="data">' + center + '</p>';
+                                        html += '</div >';
+                                        html += '</div >';//end center
+                    
+                                        html += '<div style="margin-top: 50px;">'
+                                        html += '<div class="row dataContainer" style="height: 50px;">';
+                                        html += '<p class="data">' + footer + '</p>';
+                                        html += '</div >';
+                                        html += '</div >';//end footer
+                    
+                                        html += '</div >';//end slide content container
+                    
+                                        html += '</div >';//end slide contents
+                    
+                                        html += '</div >';//end slide
+                    */
+                    var p = document.getElementById("player");
+                    var margin = document.createElement("DIV");
+                    margin.setAttribute("class", "margin-top");
+                    var newElement = document.createElement("DIV");
+                    newElement.setAttribute('id', "slide" + i);
+                    newElement.setAttribute('data-aos', animation);
+                    newElement.setAttribute('class', "slideContainer");
+                    newElement.setAttribute('onwheel', "scrollSlide(" + (i + 1) + ")");
+                    html = `
+                <div class="background slide"
+                style="height: 90%;width:100%; background-image: url(`+ image + `); color:` + fontColor + `">
+                    <div class="container">
+                        <div style="margin-top: 100px;">
+                            <h3>
+                                <div class="row dataContainer">
+                                    `+ heading + `
+                                </div>
+                            </h3>
+                        </div>
+                        <div style="margin-top: 50px;">
+                            <div class="row dataContainer" style="height: 150px;">
+                                `+ center + `
+                            </div>
+                        </div>
+                        <div style="margin-top: 50px;">
+                            <div class="row dataContainer" style="height: 50px;">
+                                `+ footer + `
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                    newElement.innerHTML = html;
+                    // p.appendChild(margin);
+                    p.appendChild(newElement);
+
+                });
+                //document.getElementById("player").innerHTML = html;
+                document.getElementById("htmlTag").setAttribute("style", "background: url(" + background + ");background-color: transparent;height: 100vh;width: 100vw;background-repeat: no-repeat;background-position: center center;background-size: cover;background-attachment: fixed;");
+
+
+            }
+        }
+        var url = window.location;
+        var urlObject = new URL(url);
+        var param = urlObject.searchParams.get('id')
+
+        url = "http://localhost:3000/api/v1/story/" + param;
+        console.log(url);
+        xhttp.open("GET", url, true);
+        xhttp.send();
+    }
+</script>
+</head>
+
+<body onload="renderer()">
+    <div class="container" id="player">
+
+    </div>
+    <!-- anim -->
+    <script>
+        function scrollSlide(position) {
+            console.log("position=" + position);
+            if (event.deltaY < 0) {
+                if (position != 1) {
+                    // console.log('scrolling up');
+                    //position--;
+                    //location.href = "#slide" + position;
+                }
+
+            }
+            else {
+                // console.log('scrolling down');
+                //position++;
+                //location.href = "#slide" + position;
+                /*  $([document.documentElement, document.body]).animate({
+                      scrollTop: $("#slide" + position).offset().top 
+                  }, { duration: 100, queue: false });*/
+
+                const element = document.getElementById('slide' + position);
+                element.scrollIntoView({
+                    behavior: "auto",
+                });
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ easing: 'ease-out-back', duration: 1500, delay: 1 });
+    </script>
+    <!-- end anim -->
+</body>
+
+</html>

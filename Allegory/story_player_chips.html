@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html style="background-color: transparent;
+height: 100vh;
+width: 100vw;
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover;
+background-attachment: fixed;">
+
+<head>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery.js"></script>
+
+    <style>
+        .slideContainer {
+            margin-top: 10vh;
+            height: 90vh;
+        }
+
+        .bgImg {
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        body {
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .outer {
+            position: relative;
+        }
+
+        .inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 50%;
+        }
+    </style>
+
+
+</head>
+<script>
+    function renderer() {
+        var i = 0;
+        //////////// AJAX REQUEST TO GET DATA ////////////////////
+        var xhttp = new XMLHttpRequest();
+        var html = '';
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var result = this.responseText;
+                var results = JSON.parse(result);
+
+                var background;
+                results.result.forEach((slide) => {
+                    i++;
+                    // console.log(slide);
+                    var id = slide.id;
+                    var name = slide.name;
+                    var image = slide.image;
+                    var animation = slide.animation;
+                    var heading = slide.heading;
+                    var center = slide.center;
+                    var footer = slide.footer;
+                    var story_id = slide.story_id;
+                    var fontColor = slide.fontColor;
+                    background = slide.background;
+                    var p = document.getElementById("player");
+                    var margin = document.createElement("DIV");
+                    margin.setAttribute("class", "margin-top");
+                    var newElement = document.createElement("DIV");
+                    newElement.setAttribute('id', "slide" + i);
+                    newElement.setAttribute('data-aos', animation);
+                    newElement.setAttribute('class', "slideContainer");
+                    if (i % 2 == 0) {
+                        html = `
+                    <div class="row inner">
+                <div class="col"></div>
+                <div class="col bgImg"
+                    style="background-image: url(`+image+`);background-position:center; color:` + fontColor + `">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <h3>
+                                    `+heading+`
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                `+center+`
+                            </div>
+                            <div class="col">
+                                `+footer+`
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+                    } else {
+                        html = `
+                        <div class="row inner">
+
+<div class="col bgImg"
+    style="background-image: url(`+image+`);background-position:center; color:` + fontColor + `">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h3>
+                    `+heading+`
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                `+center+`
+            </div>
+            <div class="col">
+                `+footer+`
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col"></div>
+</div>
+            `;
+                    }
+
+                    newElement.innerHTML = html;
+                    // p.appendChild(margin);
+                    p.appendChild(newElement);
+
+                });
+                //document.getElementById("player").innerHTML = html;
+                document.getElementById("htmlTag").setAttribute("style", "background: url(" + background + ");background-color: transparent;height: 100vh;width: 100vw;background-repeat: no-repeat;background-position: center center;background-size: cover;background-attachment: fixed;");
+
+
+            }
+        }
+        var url = window.location;
+        var urlObject = new URL(url);
+        var param = urlObject.searchParams.get('id')
+
+        url = "http://localhost:3000/api/v1/story/" + param;
+        console.log(url);
+        xhttp.open("GET", url, true);
+        xhttp.send();
+    }
+</script>
+</head>
+
+<body onload="renderer()" id="htmlTag">
+    <div class="container" id="player">
+
+    </div>
+    <!-- anim -->
+    <script>
+        function scrollSlide(position) {
+            console.log("position=" + position);
+            if (event.deltaY < 0) {
+                if (position != 1) {
+                    // console.log('scrolling up');
+                    //position--;
+                    //location.href = "#slide" + position;
+                }
+
+            }
+            else {
+                // console.log('scrolling down');
+                //position++;
+                //location.href = "#slide" + position;
+                /*  $([document.documentElement, document.body]).animate({
+                      scrollTop: $("#slide" + position).offset().top 
+                  }, { duration: 100, queue: false });*/
+
+                const element = document.getElementById('slide' + position);
+                element.scrollIntoView({
+                    behavior: "auto",
+                });
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ easing: 'ease-out-back', duration: 1500, delay: 1 });
+    </script>
+    <!-- end anim -->
+</body>
+
+</html>

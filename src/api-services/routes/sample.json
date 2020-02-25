@@ -1,0 +1,9 @@
+{
+    "storyname": "The Super Story",
+    "heading[]": ["Scene 1", "Scene 2", "", ""],
+    "center[]": ["Scene 1 Body", "Scene 2 Body", "", ""],
+    "footer[]": ["Scene 1 footer", "Scene 2 Footer", "", ""],
+    "image[]": ["one1.jpg", "one2.jpg", "", ""],
+    "fontColor[]": ["#a79090", "#dc3636", "#000000", "#000000"],
+    "animation[]": ["flip-up", "zoom-out"]
+}
